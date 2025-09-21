@@ -1,13 +1,16 @@
 {
   "scripts": {
-    "start": "bun run --watch ./src/main.ts"
+    "start": "bun run --watch ./src/main.ts",
+    "prisma": "bunx prisma generate",
+    "prisma:studio": "bunx prisma studio"
   },
-  "dependencies": { 
-    "@apollo/server": "^5.0.0", 
-    "graphql": "^16.11.0" 
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "graphql": "^16.11.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
+    "@prisma/client": "^6.16.2",
     "@types/node": "^24.5.2",
     "typescript": "^5.9.2"
   }
