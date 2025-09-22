@@ -1,0 +1,10 @@
+type Todo {
+  id: Int!
+  title: String!
+  done: Boolean!
+}
+
+type Query {
+  FindTodoAll: [Todo]!
+  FindTodo: Todo
+}
