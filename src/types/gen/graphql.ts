@@ -15,10 +15,29 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type InputTodoAll = {
+  done?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   FindTodo?: Maybe<Todo>;
-  FindTodoAll: Array<Maybe<Todo>>;
+  FindTodoAll: ResponseTodoAll;
+};
+
+
+export type QueryFindTodoAllArgs = {
+  cond?: InputMaybe<InputTodoAll>;
+};
+
+export type ResponseTodoAll = {
+  __typename?: 'ResponseTodoAll';
+  count: Scalars['Int']['output'];
+  todos: Array<Maybe<Todo>>;
 };
 
 export type Todo = {
@@ -102,8 +121,10 @@ export type DirectiveResolverFn<TResult = Record<PropertyKey, never>, TParent = 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  InputTodoAll: InputTodoAll;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
+  ResponseTodoAll: ResolverTypeWrapper<ResponseTodoAll>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Todo: ResolverTypeWrapper<Todo>;
 };
@@ -111,15 +132,22 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
+  InputTodoAll: InputTodoAll;
   Int: Scalars['Int']['output'];
   Query: Record<PropertyKey, never>;
+  ResponseTodoAll: ResponseTodoAll;
   String: Scalars['String']['output'];
   Todo: Todo;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   FindTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType>;
-  FindTodoAll?: Resolver<Array<Maybe<ResolversTypes['Todo']>>, ParentType, ContextType>;
+  FindTodoAll?: Resolver<ResolversTypes['ResponseTodoAll'], ParentType, ContextType, Partial<QueryFindTodoAllArgs>>;
+};
+
+export type ResponseTodoAllResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResponseTodoAll'] = ResolversParentTypes['ResponseTodoAll']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  todos?: Resolver<Array<Maybe<ResolversTypes['Todo']>>, ParentType, ContextType>;
 };
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
@@ -130,6 +158,7 @@ export type TodoResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
+  ResponseTodoAll?: ResponseTodoAllResolvers<ContextType>;
   Todo?: TodoResolvers<ContextType>;
 };
 

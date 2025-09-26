@@ -1,3 +1,5 @@
+import todoDTO from "@/dto/todo";
+import todoService from "@/service/todo";
 import { Resolvers } from "@/types/gen/graphql";
 
 export const resolvers: Resolvers = {
@@ -9,8 +11,9 @@ export const resolvers: Resolvers = {
 				done: false,
 			};
 		},
-		FindTodoAll: () => {
-			return [];
+		FindTodoAll: async (_, { cond }) => {
+			const newCond = todoDTO.todoAll(cond);
+			return await todoService.findTodoAll(newCond);
 		},
 	},
 };

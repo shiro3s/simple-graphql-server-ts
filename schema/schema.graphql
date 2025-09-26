@@ -4,7 +4,20 @@ type Todo {
   done: Boolean!
 }
 
+input InputTodoAll {
+  id: Int
+  title: String
+  done: Boolean
+  offset: Int
+  limit: Int
+}
+
+type ResponseTodoAll {
+  todos: [Todo]!
+  count: Int!
+}
+
 type Query {
-  FindTodoAll: [Todo]!
+  FindTodoAll(cond: InputTodoAll): ResponseTodoAll!
   FindTodo: Todo
 }
